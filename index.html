@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paletto — Color Palette Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!--Header-->
+  <header>
+    <div class="logo">paletto<span>.app</span></div>
+    <div class="header-actions">
+      <button class="btn" onclick="randomBase()">⟳ Random</button>
+      <button class="btn primary" onclick="savePalette()">Save palette</button>
+    </div>
+  </header>
+
+  <!--Main Content-->
+  <main>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="controls-left">
+
+        <!-- Base color + count row -->
+        <div class="control-row">
+          <div class="control-group">
+            <span class="control-label">Base color</span>
+            <div class="color-pick-wrap" onclick="document.getElementById('colorPicker').click()">
+              <div class="color-swatch" id="colorSwatch"></div>
+              <input type="color" id="colorPicker" value="#6c63ff">
+              <input class="hex-input" id="hexInput" type="text" value="#6C63FF" maxlength="7" spellcheck="false">
+            </div>
+          </div>
+          <div class="control-group">
+            <span class="control-label">Colors</span>
+            <div class="count-btns">
+              <button class="count-btn" onclick="changeCount(-1)">−</button>
+              <span class="count-val" id="countVal">5</span>
+              <button class="count-btn" onclick="changeCount(1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Harmony mode pills -->
+        <div class="control-group">
+          <span class="control-label">Harmony</span>
+          <div class="mode-pills">
+            <button class="pill active" data-mode="complementary" onclick="setMode(this)">Complementary</button>
+            <button class="pill" data-mode="analogous"      onclick="setMode(this)">Analogous</button>
+            <button class="pill" data-mode="triadic"        onclick="setMode(this)">Triadic</button>
+            <button class="pill" data-mode="split"          onclick="setMode(this)">Split-comp</button>
+            <button class="pill" data-mode="tetradic"       onclick="setMode(this)">Tetradic</button>
+            <button class="pill" data-mode="monochromatic"  onclick="setMode(this)">Monochromatic</button>
+          </div>
+        </div>
+
+      </div>
+      <button class="gen-btn" onclick="generate()">Generate →</button>
+    </div>
+
+    <!-- Generated Palette -->
+    <div class="palette-section">
+      <div class="section-header">
+        <span class="section-title">Generated palette</span>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="palette-name" id="paletteName">—</span>
+          <div class="view-toggle">
+            <button class="view-btn active" id="viewStrip" onclick="setView('strip')" title="Strip view">▬</button>
+            <button class="view-btn"        id="viewCard"  onclick="setView('card')"  title="Card view">⊞</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strip view -->
+      <div id="stripView" class="palette-strips"></div>
+
+      <!-- Card view (hidden by default) -->
+      <div id="cardView" class="palette-cards" style="display:none;"></div>
+    </div>
+
+    <!-- Tints & Shades-->
+    <div class="tints-section">
+      <div class="section-header">
+        <span class="section-title">Tints &amp; shades</span>
+        <span class="palette-name" id="tintsLabel">—</span>
+      </div>
+      <div id="tintsStrips"></div>
+    </div>
+
+    <!--Export -->
+    <div class="export-section">
+      <div class="export-title">Export</div>
+      <div class="export-tabs">
+        <button class="export-tab active" onclick="setExportTab(this, 'css')">CSS Variables</button>
+        <button class="export-tab"        onclick="setExportTab(this, 'hex')">HEX Array</button>
+        <button class="export-tab"        onclick="setExportTab(this, 'tailwind')">Tailwind</button>
+        <button class="export-tab"        onclick="setExportTab(this, 'scss')">SCSS</button>
+      </div>
+      <div style="position: relative;">
+        <pre class="export-code" id="exportCode"></pre>
+        <button class="copy-code-btn" onclick="copyCode()">Copy</button>
+      </div>
+    </div>
+
+    <!-- Saved Palettes -->
+    <div class="saved-section">
+      <div class="section-header">
+        <span class="section-title">Saved palettes</span>
+        <button class="btn" onclick="clearSaved()" style="font-size:11px; padding:6px 12px;">Clear all</button>
+      </div>
+      <div class="saved-grid" id="savedGrid">
+        <div class="empty-saved">No saved palettes yet.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
