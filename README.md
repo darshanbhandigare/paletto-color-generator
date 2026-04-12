@@ -1,7 +1,7 @@
 # 🎨 Paletto — Color Palette Generator
 
 A modern, interactive color palette generator that helps designers and developers create beautiful color combinations instantly.  
-🚀 Built with pure HTML, CSS, and JavaScript — no frameworks needed.
+🚀 Built with pure HTML, CSS, and Vanilla JavaScript — no frameworks needed.
 
 ---
 
